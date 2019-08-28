@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Snack Boutique</title>
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+  <a href="/"><img src="assets/logo.jpg" id="logo" alt="My store logo"></a>
+
+  <button type="userSubmission" id="upload" class="trigger">Upload your own snack here!</button>
+  <div class="modal">
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <h1 style="font-family:'Open Sans', sans-serif;font-size:100%;">Upload your own snack here!</h1>
+      <form method="POST" action="/enteredSnack" class="form-container">
+        <input id="Brand" type="text" name="Brand" placeholder="Brand" required>
+        <input id="Name" type="text" name="Name" placeholder="Name" required>
+        <input id="Image" type="text" name="Image" placeholder="Image Link" required>
+        <input id="Price" type="text" name="Price" placeholder="Price" required>
+        <input id="UserType" type="text" name="UserType" placeholder="Snack Type" required>
+        <input type="submit" value="Add Snack" id='addSnack'>
+      </form>
+
+
+    </div>
+  </div>
+  <script>
+    var modal = document.querySelector(".modal");
+    var trigger = document.querySelector(".trigger");
+    var closeButton = document.querySelector(".close-button");
+
+    function toggleModal() {
+      modal.classList.toggle("show-modal");
+    }
+
+    function windowOnClick(event) {
+      if (event.target === modal) {
+        toggleModal();
+      }
+    }
+
+    trigger.addEventListener("click", toggleModal);
+    closeButton.addEventListener("click", toggleModal);
+    window.addEventListener("click", windowOnClick);
+
+
+
+  </script>
+
+  <div class="container">
+    <fieldset>
+      <form action="/userSearch" method="POST">
+        <input name="snack" type="text" class="ghost-input" placeholder="Enter a Snack" required>
+        <input type="submit" class="ghost-button" value="Get Snack" id='searchButton'>
+      </form>
+    </fieldset>
+  </div>
+
+
+  <form method="POST" action="/typeResults">
+    <label for="selectOptions" id="TypeLabel">Snack Type</label><br>
+    <select name="Type" id="Type">
+      <option value="Candy">Candy</option>
+      <option value="Cookies">Cookies</option>
+      <option value="Chips">Chips</option>
+      <option value="Fruit">Fruit</option>
+      <option value="Seafood">Seafood</option>
+      <option value="Meat">Meat</option>
+      <option value="Misc.">Misc.</option>
+    </select>
+    <input type='submit' name='register' id='typeSubmit'>
+  </form>
+
+  <form method="POST" action="/priceResults">
+    <label for="priceRanges" id="priceLabel">Price Range</label><br>
+    <input id="lowestPrice" type="number" name="lowestPrice" placeholder="Lowest" required>
+    <input id="highestPrice" type="number" name="highestPrice" placeholder="Highest" required>
+    <input type="submit" value="Sort By Price" id='priceSubmit'>
+  </form>
+
+  <section class="products" id="products">
+
+    <% for(var i = 0; i < products.length; i++) {%>
+    <div class="product-card">
+      <div class="product-image">
+        <img src='<%= products[i].image_link %>'>
+      </div>
+      <div class="product-info">
+        <h5><%= products[i].brand +" " + products[i].name %></h5>
+        <h6><%= products[i].price %></h6>
+      </div>
+    </div>
+
+    <% } %>
+
+    
+    </div>
+    </div>
+    <!-- more products -->
+
+  </section>
+
+
+
+
+
+</body>
+
+</html>
